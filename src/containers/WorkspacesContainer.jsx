@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import OverviewContainer from './containers/OverviewContainer'
+import OverviewContainer from './OverviewContainer'
 import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
-import MonitorContainer from './containers/MonitorContainer'
-import ReportsContainer from './containers/ReportsContainer'
-import Tabs from './components/tabs'
+import MonitorContainer from './MonitorContainer'
+import ReportsContainer from './ReportsContainer'
+import Tabs from '../components/tabs'
 
 const menuItems = ["Overview", "Monitors", "Reports"]
 
