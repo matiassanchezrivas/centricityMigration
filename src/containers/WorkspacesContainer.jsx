@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import OverviewContainer from './OverviewContainer'
-import { Container, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
-import classnames from 'classnames';
+import { Container, Row, Col, TabContent, TabPane } from 'reactstrap';
 import MonitorContainer from './MonitorContainer'
 import ReportsContainer from './ReportsContainer'
 import Tabs from '../components/tabs'

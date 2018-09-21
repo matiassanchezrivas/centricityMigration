@@ -1,29 +1,35 @@
 import React from 'react';
 import ReportsHeader from '../components/ReportsHeader'
-//import HexagonsContainer from '../components/hexagonsContent'
 
-
-// const styles = theme => ({
-//     marginTop: {
-//         marginTop: theme.spacing.unit * 2,
-//     },
-//     marginBottom: {
-//         marginBottom: theme.spacing.unit * 2,
-//     }
-// });
 
 class ReportsContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            range:
+                {
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    key: 'selection',
+                }
+
         };
+        this.handleSelectRange = this.handleSelectRange.bind(this)
     }
+
+    handleSelectRange(ranges) {
+        this.setState({ range: ranges.selection });
+    }
+
     componentDidMount() {
     }
     render() {
+        const { range } = this.state;
         return (<div>
-            <ReportsHeader />
-            {/* <HexagonsContainer /> */}
+            <ReportsHeader
+                range={range}
+                handleSelectRange={this.handleSelectRange}
+            />
         </div>);
     }
 }

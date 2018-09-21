@@ -24,12 +24,23 @@ export default class HexagonsHeader extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
+
         this.state = {
             isOpen: false,
-            dropdownOpen: true
+            dropdownOpen: false,
+            rSelected: 0,
         };
+
+        this.toggle = this.toggle.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+    }
+
+
+
+
+    onRadioBtnClick(rSelected) {
+        this.setState({ rSelected });
     }
 
     toggle() {
@@ -44,6 +55,7 @@ export default class HexagonsHeader extends React.Component {
     }
 
     render() {
+        const { rSelected } = this.state;
         return (
             <div>
                 <Navbar color="light" light expand="md">
@@ -70,7 +82,10 @@ export default class HexagonsHeader extends React.Component {
                         </Nav>
                         <Nav className="ml-3" navbar>
                             <ButtonGroup>
-                                {views.map((view, i) => <Button key={i}>{view}</Button>)}
+                                {views.map((view, i) => <Button key={i} onClick={() => this.onRadioBtnClick(i)} active={rSelected === i} >{view}</Button>)}
+
+
+
                             </ButtonGroup>
                         </Nav>
                         <Nav className="ml-auto" navbar>

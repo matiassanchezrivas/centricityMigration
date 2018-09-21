@@ -120,7 +120,7 @@ class hexagonsContent extends React.Component {
                                         }) : null}
 
                                         {(this.state.rSelected === 1) ? liquidwareStates.map((state, i) => {
-                                            return (<div style={Styles.margin}>
+                                            return (<div key={i} style={Styles.margin}>
                                                 <div style={{ ...Styles.hexagono, ...Styles["colorLw" + i] }}></div>
                                                 <li key={i} style={Styles.li} >{state}</li>
                                                 {/* /* class={`legend legend-aws-${i + 1}`} */}

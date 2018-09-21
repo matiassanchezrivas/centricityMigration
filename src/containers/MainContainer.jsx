@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { PropsRoute, Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import WorkspacesContainer from './WorkspacesContainer'
 
 class MainContainer extends React.Component {
