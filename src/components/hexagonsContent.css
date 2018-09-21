@@ -1,0 +1,348 @@
+.hexagons {
+    position: relative;
+    width: 100%!important;
+    text-align: center
+}
+
+.hexagons__legend {
+    padding: 5px 20px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    margin: 0 0 20px;
+    border-radius: 3px
+}
+
+.hexagons__legend:after {
+    content: '';
+    clear: both;
+    display: block
+}
+
+.hexagons__legend .legend {
+    float: left;
+    margin-right: 20px;
+    padding-left: 20px;
+    position: relative;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.hexagons__legend .legend:last-child {
+    margin-right: 5px
+}
+
+.hexagons__legend .legend:before {
+    font-size: 20px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    content: '\e604';
+    font-family: icomoon;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 5px;
+    color: #CCC
+}
+
+.hexagons__legend .legend-aws-1:before {
+    color: #69c4a6
+}
+
+.hexagons__legend .legend-aws-2:before {
+    color: #f8e185
+}
+
+.hexagons__legend .legend-aws-3:before {
+    color: #5288d1
+}
+
+.hexagons__legend .legend-aws-4:before {
+    color: #222
+}
+
+.hexagons__legend .legend-aws-5:before {
+    color: #789
+}
+
+.hexagons__legend .legend-aws-6:before {
+    color: #F59B00
+}
+
+.hexagons__legend .legend-aws-7:before {
+    color: #c61d6a
+}
+
+.hexagons__legend .legend-aws-8:before {
+    color: #32cd32
+}
+
+.hexagons__legend .legend-lw-1:before {
+    color: #239023
+}
+
+.hexagons__legend .legend-lw-2:before {
+    color: #32cd32
+}
+
+.hexagons__legend .legend-lw-3:before {
+    color: #84e184
+}
+
+.hexagons__legend .legend-lw-4:before {
+    color: #f8e185
+}
+
+.hexagons__legend .legend-lw-5:before {
+    color: #F59B00
+}
+
+.hexagons__legend .legend-lw-6:before {
+    color: #c61d6a
+}
+
+.hexagons__legend .legend-lw-7:before {
+    color: gray
+}
+
+.hexagons>* {
+    box-sizing: border-box
+}
+
+.hexagons__inner-wrapper {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    height: 100%;
+    clear: both
+}
+
+.hexagons__inner-wrapper .tooltip.top .tooltip-arrow {
+    border-top-color: #5288d1
+}
+
+.hexagons__inner-wrapper .tooltip.top .tooltip-inner {
+    background-color: #5288d1
+}
+
+.hexagons .hexagon {
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+    color: #555
+}
+
+.hexagons .hexagon .icon-hex-lg {
+    color: #BBB;
+    font-size: inherit
+}
+
+.hexagons .hexagon[data-status=STOPPED] .icon-hex-lg {
+    color: #222
+}
+
+.hexagons .hexagon[data-status=AVAILABLE] .icon-hex-lg {
+    color: #69c4a6
+}
+
+.hexagons .hexagon[data-status=PENDING] .icon-hex-lg {
+    color: #5288d1
+}
+
+.hexagons .hexagon[data-status=UNHEALTHY] .icon-hex-lg {
+    color: #c61d6a
+}
+
+.hexagons .hexagon[data-status=TERMINATING] .icon-hex-lg {
+    color: #F59B00
+}
+
+.hexagons .hexagon[data-status=STOPPING] .icon-hex-lg {
+    color: #789
+}
+
+.hexagons .hexagon[data-status=STARTING] .icon-hex-lg {
+    color: #f8e185
+}
+
+.hexagons .hexagon[data-userconnected=true] .icon-hex-lg {
+    color: #32cd32!important
+}
+
+.hexagons .hexagon span.firefox {
+    left: 0;
+    position: absolute;
+    top: 20px;
+    z-index: -1
+}
+
+.hexagons .hexagon .inner {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: -ms-flexbox;
+    display: flex;
+    transition: all .3s;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000
+}
+
+.hexagons .hexagon .inner .wrapper {
+    margin: auto
+}
+
+.hexagons .workspace-id {
+    display: none
+}
+
+.hexagons.type-LIST .hexagon[data-status=STOPPED] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #222,3px -3px 0 #222,-3px 3px 0 #222,3px 3px 0 #222
+}
+
+.hexagons.type-LIST .hexagon[data-status=STOPPED] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon[data-status=STARTED] .icon-hex-lg,.hexagons.type-LIST .hexagon[data-status=STARTING] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #69c4a6,3px -3px 0 #69c4a6,-3px 3px 0 #69c4a6,3px 3px 0 #69c4a6
+}
+
+.hexagons.type-LIST .hexagon[data-status=STARTED] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon[data-status=PENDING] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #5288d1,3px -3px 0 #5288d1,-3px 3px 0 #5288d1,3px 3px 0 #5288d1
+}
+
+.hexagons.type-LIST .hexagon[data-status=PENDING] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon[data-status=TERMINATING] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #c61d6a,3px -3px 0 #c61d6a,-3px 3px 0 #c61d6a,3px 3px 0 #c61d6a
+}
+
+.hexagons.type-LIST .hexagon[data-status=TERMINATING] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon[data-status=STOPPING] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #789,3px -3px 0 #789,-3px 3px 0 #789,3px 3px 0 #789
+}
+
+.hexagons.type-LIST .hexagon[data-status=STOPPING] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon[data-status=STARTING] .icon-hex-lg {
+    text-shadow: -3px -3px 0 #f8e185,3px -3px 0 #f8e185,-3px 3px 0 #f8e185,3px 3px 0 #f8e185
+}
+
+.hexagons.type-LIST .hexagon[data-status=STARTING] .icon-hex-lg:before {
+    color: #FFF
+}
+
+.hexagons.type-LIST .hexagon:hover .icon-hex-lg:before {
+    color: #EEE
+}
+
+.hexagons.type-LIST .hexagon .workspace {
+    position: relative
+}
+
+.hexagons.type-LIST .hexagon .workspace div {
+    display: none!important
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__loading {
+    font-family: streamline;
+    position: absolute;
+    top: 85px;
+    left: 87px;
+    animation: spin 1s infinite linear;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 700;
+    text-rendering: optimizeLegibility;
+    font-size: 25px;
+    color: #333;
+    display: block!important
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__id {
+    position: absolute;
+    top: 55px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+    width: 100%;
+    padding: 0 25px;
+    word-wrap: break-word
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__env {
+    position: absolute;
+    top: 80px;
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+    padding: 0 25px;
+    word-wrap: break-word
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__cname {
+    top: 100px!important
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__view {
+    position: absolute;
+    top: 131px;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    font-weight: 700;
+    font-size: 13px
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__health {
+    position: absolute;
+    top: 155px;
+    left: 90px;
+    font-size: 15px;
+    text-align: center;
+    width: 18px;
+    height: 18px;
+    border-width: 3px;
+    border-style: solid;
+    background: red;
+    border-radius: 50%
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__health--ok {
+    background: #7bd388;
+    border-color: #c3ebc9
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__health--warning {
+    background: #eda400;
+    border-color: #f7d68b
+}
+
+.hexagons.type-LIST .hexagon .workspace .workspace__health--error {
+    background: #e61508;
+    border-color: #f4958f
+}
+
+.hexagons.type-LIST .hexagon.loaded .workspace div:not(.workspace__loading) {
+    display: block!important
+}
+
+.hexagons.type-LIST .hexagon.loaded .workspace__loading {
+    display: none!important
+}
