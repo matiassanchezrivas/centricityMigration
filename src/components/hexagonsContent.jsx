@@ -101,8 +101,6 @@ var Styles = {
         backgroundColor: 'red',
         nthChild: "2n"
     }
-
-
 }
 
 class hexagonsContent extends React.Component {
@@ -133,7 +131,6 @@ class hexagonsContent extends React.Component {
                             </div>
                             )
                         }) : null}
-
                         {(this.state.rSelected === 1) ? liquidwareStates.map((state, i) => {
                             return (<div key={i} style={Styles.margin}>
                                 <div style={{ ...Styles.hexagono, ...Styles["colorLw" + i] }}></div>
@@ -150,7 +147,6 @@ class hexagonsContent extends React.Component {
                     </Row>
                 </Card>
                 <Row style={Styles.margin}>
-
                     {
                         hexagonsPrueba.map((hex, i) => {
                             return (
@@ -162,48 +158,10 @@ class hexagonsContent extends React.Component {
                             )
                         })
                     }
-
                 </Row>
             </div >
         )
-
-        // return (
-        //     <div className={null}>
-        //         <div id="hexagons" class="hexagons">
-        //             <div class="hexagons__legend">
-        //                 <div ng-if="workspacesQualify == 'aws'">
-        //                     <div class="legend legend-aws-1">Available</div>
-        //                     <div class="legend legend-aws-2">Starting</div>
-        //                     <div class="legend legend-aws-3">Pending</div>
-        //                     <div class="legend legend-aws-4">Stopped</div>
-        //                     <div class="legend legend-aws-5">Stopping</div>
-        //                     <div class="legend legend-aws-6">Terminating</div>
-        //                     <div class="legend legend-aws-7">Unhealthy</div>
-        //                     <div class="legend legend-aws-8">Logged</div>
-        //                 </div>
-        //                 {/* <div ng-if="workspacesQualify == 'lw'">
-        //                     <div class="legend legend-lw-1">A+</div>
-        //                     <div class="legend legend-lw-2">A</div>
-        //                     <div class="legend legend-lw-3">A-</div>
-        //                     <div class="legend legend-lw-4">B+</div>
-        //                     <div class="legend legend-lw-5">B-</div>
-        //                     <div class="legend legend-lw-6">C</div>
-        //                     <div class="legend legend-lw-7">N/A</div>
-        //                 </div> */}
-        //                 <div class="toggle-qualify">
-        //                     <div class="btn-bar">
-        //                         <div class="btn-bar__item" ng-class="{'btn-bar__item--active': workspacesQualify == 'aws'}" ng-click="changeQualify('aws')">AWS</div>
-        //                         <div class="btn-bar__item" ng-class="{'btn-bar__item--active': workspacesQualify == 'lw'}"
-        //                             ng-click="changeQualify('lw')">Liquidware</div>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // );
-
     }
-
 }
 
 

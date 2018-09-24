@@ -29,9 +29,7 @@ var Styles = {
     }
 }
 
-
-
-const Modal = ModalHOC(DateRangePicker);
+const ModalDateRangePicker = ModalHOC(DateRangePicker);
 
 export default class HexagonsHeader extends React.Component {
     constructor(props) {
@@ -89,7 +87,7 @@ export default class HexagonsHeader extends React.Component {
 
         return (
             <div>
-                <Modal
+                <ModalDateRangePicker
                     isOpen={dateRangeModalOpen}
                     toggle={this.toggleModal}
                     title="Select date"

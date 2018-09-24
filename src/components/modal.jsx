@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalFooter, Button } from 'reactstrap';
 import DateRangePicker from './DateRangePicker'
 
-//isOpen (BOOLEAN) = whether the modal is/isnt be shown
+//isOpen (BOOLEAN) = whether the modal is/isnt shown
 //title (STRING)
 //toggle (FUNCTION) 
-//className (OBJECT)
+//className (STRING)
 //buttons (OBJECT) > example: {color: 'Primary', onClick: () => console.log('clic'), text: 'texto del boton'}
-
-
 
 const ModalHOC = BaseComponent => (props) => {
     const { isOpen, toggle, className, buttons, title } = props;
     return (
         <Modal isOpen={isOpen} toggle={toggle} className={className}>
-            <ModalHeader toggle={toggle}>{title}</ModalHeader>
+            {title ? <ModalHeader toggle={toggle}>{title}</ModalHeader> : null}
             <BaseComponent {...props} />
             {(buttons) ?
                 <ModalFooter>
@@ -23,7 +21,6 @@ const ModalHOC = BaseComponent => (props) => {
                     )}
                 </ModalFooter>
                 : null}
-
         </Modal>)
 }
 

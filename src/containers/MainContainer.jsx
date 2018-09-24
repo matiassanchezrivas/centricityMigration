@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import WorkspacesContainer from './WorkspacesContainer'
+import axios from '../config/axios'
 
 class MainContainer extends React.Component {
     constructor(props) {
@@ -11,6 +12,9 @@ class MainContainer extends React.Component {
     }
 
     componentDidMount() {
+        axios.get('/workspace/customer/3/list2?page=0&size=126&sort=id')
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err))
     }
 
     render() {
