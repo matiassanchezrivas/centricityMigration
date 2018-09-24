@@ -3,10 +3,6 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 
 class Tab extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const { tabItems, toggle, activeTab } = this.props;
         //tabItems STRING ARRAY
@@ -19,7 +15,7 @@ class Tab extends Component {
                         <NavItem key={i}>
                             <NavLink
                                 className={classnames({ active: activeTab === i })}
-                                onClick={() => { this.props.toggle(i); }}
+                                onClick={() => { toggle(i); }}
                             >
                                 {menuItem}
                             </NavLink>

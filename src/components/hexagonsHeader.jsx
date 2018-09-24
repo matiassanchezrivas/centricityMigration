@@ -10,26 +10,46 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Button, ButtonGroup, InputGroup, InputGroupAddon, Input, Dropdown
+    Button, ButtonGroup, InputGroup, InputGroupAddon, Input, Dropdown,
+    FormGroup, Label
 } from 'reactstrap';
 
 import { FaSearch } from 'react-icons/fa';
 
-
-const orderBy = ['By Tags', 'By Region', 'By Directory', 'By Account']
+const orderby = ['', 'tags', 'region', 'directory', 'account']
 const views = ['Status', 'List', 'Grid']
+
+var Styles = {
+    marginHorizontal: {
+        marginRight: '5px',
+        marginLeft: '5px'
+    },
+    marginVertical: {
+        marginTop: '5px',
+        marginBottom: '5px',
+    }
+}
 
 
 export default class HexagonsHeader extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
-        this.toggleDropdown = this.toggleDropdown.bind(this);
         this.state = {
             isOpen: false,
-            dropdownOpen: true
+            dropdownOpen: false,
+            rSelected: 0,
+            orderBy: undefined,
         };
+
+        this.toggle = this.toggle.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    onRadioBtnClick(rSelected) {
+        this.setState({ rSelected });
     }
 
     toggle() {
@@ -43,36 +63,53 @@ export default class HexagonsHeader extends React.Component {
         }));
     }
 
+    handleChange(name, value) {
+        if (name == 'orderBy') {
+            this.setState({ [name]: value.split("Order by ")[1] }, () => { console.log(this.state) })
+        }
+    }
+
+
     render() {
+        const { rSelected, orderBy, isOpen } = this.state;
+        const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
             <div>
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />
+
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="xs-4" navbar>
+                        <Nav style={{ ...margin, ...Styles.marginHorizontal }} navbar>
                             <InputGroup>
                                 <Input />
                                 <InputGroupAddon addonType="append"><Button><FaSearch /></Button></InputGroupAddon>
                             </InputGroup>
                         </Nav>
-                        <Nav>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                                <DropdownToggle caret>
-                                    Select a Report
-        </DropdownToggle>
-                                <DropdownMenu>
-                                    {orderBy.map((report, i) => <DropdownItem key={i}>{report}</DropdownItem>
 
+                        <Nav style={{ ...margin, ...Styles.marginHorizontal }}>
+                            <Input type="select" name="orderBy" onChange={(event) => this.handleChange("orderBy", event.target.value)}>
+                                {orderby.map((report, i) =>
+                                    <option key={i}>Order by {report}</option>
+                                )}
+                            </Input>
+                        </Nav>
+
+                        {
+                            (orderBy != undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
+                                <Input type="select" name="select" id="exampleSelect">
+                                    {orderby.map((report, i) =>
+                                        <option key={i}>Muestra</option>
                                     )}
+                                </Input>
+                            </Nav>) : null
+                        }
 
-                                </DropdownMenu>
-                            </Dropdown>
-                        </Nav>
-                        <Nav className="ml-3" navbar>
-                            <ButtonGroup>
-                                {views.map((view, i) => <Button key={i}>{view}</Button>)}
-                            </ButtonGroup>
-                        </Nav>
+
+                        <ButtonGroup style={{ ...margin, ...Styles.marginHorizontal }}>
+                            {views.map((view, i) => <Button key={i} onClick={() => this.onRadioBtnClick(i)} active={rSelected === i} >{view}</Button>)}
+                        </ButtonGroup>
+
+
                         <Nav className="ml-auto" navbar>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
