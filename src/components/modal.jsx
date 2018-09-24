@@ -23,5 +23,4 @@ const ModalHOC = BaseComponent => (props) => {
                 : null}
         </Modal>)
 }
-
 export default ModalHOC;

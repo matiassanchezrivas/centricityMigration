@@ -16,7 +16,7 @@ import {
 
 import { FaSearch } from 'react-icons/fa';
 
-const orderby = ['', 'tags', 'region', 'directory', 'account']
+const groupby = ['', 'tags', 'region', 'directory', 'account']
 const views = ['Status', 'List', 'Grid']
 
 var Styles = {
@@ -39,7 +39,7 @@ export default class HexagonsHeader extends React.Component {
             isOpen: false,
             dropdownOpen: false,
             rSelected: 0,
-            orderBy: undefined,
+            groupBy: undefined,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -64,14 +64,15 @@ export default class HexagonsHeader extends React.Component {
     }
 
     handleChange(name, value) {
-        if (name == 'orderBy') {
-            this.setState({ [name]: value.split("Order by ")[1] }, () => { console.log(this.state) })
+        if (name == 'groupBy') {
+            this.setState({ [name]: value.split("Group by ")[1] }, () => { console.log(this.state) })
         }
     }
 
 
     render() {
-        const { rSelected, orderBy, isOpen } = this.state;
+        const { rSelected, groupBy, isOpen } = this.state;
+        const { tags } = this.props;
         const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
             <div>
@@ -87,20 +88,27 @@ export default class HexagonsHeader extends React.Component {
                         </Nav>
 
                         <Nav style={{ ...margin, ...Styles.marginHorizontal }}>
-                            <Input type="select" name="orderBy" onChange={(event) => this.handleChange("orderBy", event.target.value)}>
-                                {orderby.map((report, i) =>
-                                    <option key={i}>Order by {report}</option>
+                            <Input type="select" name="groupBy" onChange={(event) => this.handleChange("groupBy", event.target.value)}>
+                                {groupby.map((report, i) =>
+                                    <option key={i}>Group by {report}</option>
                                 )}
                             </Input>
                         </Nav>
 
                         {
-                            (orderBy != undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
+                            (groupBy != undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <Input type="select" name="select" id="exampleSelect">
-                                    {orderby.map((report, i) =>
-                                        <option key={i}>Muestra</option>
-                                    )}
+                                    {
+                                        groupBy == 'tags' ?
+                                            tags.map((tag, i) =>
+                                                < option key={i} >{tag}</option>
+                                            ) :
+                                            groupby.map((report, i) =>
+                                                <option key={i}>Muestra</option>
+                                            )
+                                    }
                                 </Input>
+
                             </Nav>) : null
                         }
 
@@ -135,34 +143,6 @@ export default class HexagonsHeader extends React.Component {
                 </Navbar>
 
             </div>
-
-            // <div className={null}>
-            //     <div class="hexagons__header">
-            //         <div class="actions">
-            //             <input class="input ng-pristine ng-valid has-visited ng-touched" style={{ height: 'auto !important', width: '100% !important' }}
-            //                 placeholder="Type the usernames">
-            //             </input>
-            //             <button class="primary-bglight-button primary-bglight-button2" style={{ marginRight: '2vh', padding: '0 30px' }} >
-            //                 {/* ng-click="filterByUsername()"> */}
-            //                 S
-            //                 <span class="glyphicon glyphicon-search"></span>
-            //             </button>
-
-            //             <select class="form-control select-workspaces ng-pristine ng-valid has-visited ng-touched">
-            //                 {orderBy.map((opt) => <option value={opt}>{opt}</option>)}
-            //             </select>
-            //             <div class="btn-bar">
-            //                 {views.map((view) => <div class="btn-bar__item">{view} view</div>)}
-            //                 {/* <div class="btn-bar__item" ng-class="{'btn-bar__item--active': settings.tab == 'LIST'}" ng-click="changeTab('LIST')">List view</div> */}
-            //             </div>
-            //             <button class="primary-bglight-button primary-bglight-button2 button--arrow right" ng-if="(isAuthorized([roles.CH_USER_ADMIN,  roles.CH_SYSTEM_ADMIN]))"
-            //                 data-animation="am-flip-x" bs-dropdown="actions" data-placement="bottom-right" translate>Actions</button>
-            //             <button class="primary-bglight-button primary-bglight-button2" ng-click="openFilters()">Filters</button>
-            //             <button class="primary-bglight-button primary-bglight-button2" ng-if="(isAuthorized([roles.CH_USER_ADMIN, roles.CH_SYSTEM_ADMIN]))"
-            //                 ng-click="launchWorkspaces()" tanslate>Launch Workspaces</button>
-            //         </div>
-            //     </div>
-            // </div>
         );
     }
 }

@@ -4,6 +4,8 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import WorkspacesContainer from './WorkspacesContainer'
 import axios from '../config/axios'
 
+import { fetchWorkspaces, fetchTags, fetchBundles, fetchGroups, fetchMachineNames, fetchUserNames } from '../action-creators/workspaces'
+
 class MainContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -12,9 +14,20 @@ class MainContainer extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/workspace/customer/3/list2?page=0&size=126&sort=id')
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err))
+        const { fetchWorkspaces, fetchTags, fetchGroups, fetchMachineNames, fetchUserNames, fetchBundles } = this.props;
+        fetchWorkspaces(3, 0, 126, 'id')
+            .catch((e) => console.log(e))
+        fetchTags(3)
+            .then((data) => console.log('TAGS', data))
+        fetchGroups(3)
+            .then((data) => console.log('GROUPS', data))
+        fetchMachineNames(3)
+            .then((data) => console.log('MACHINENAMES', data))
+        fetchUserNames(3)
+            .then((data) => console.log('USERNAMES', data))
+        fetchBundles(3)
+            .then((data) => console.log('BUNDLES', data))
+
     }
 
     render() {
@@ -29,14 +42,18 @@ class MainContainer extends React.Component {
 
 const mapDispatchToProps = function (dispatch) {
     return ({
-        //fetchUser: (id) => dispatch(fetchUser(id)),
+        fetchWorkspaces: (userId, page, size, sort) => dispatch(fetchWorkspaces(userId, page, size, sort)),
+        fetchTags: (id) => dispatch(fetchTags(id)),
+        fetchGroups: (id) => dispatch(fetchGroups(id)),
+        fetchUserNames: (id) => dispatch(fetchUserNames(id)),
+        fetchMachineNames: (id) => dispatch(fetchMachineNames(id)),
+        fetchBundles: (id) => dispatch(fetchBundles(id))
     })
 }
 
 
 const mapStateToProps = function (state) {
     return {
-        // selectedUser: state.users.selectedUser,
     };
 }
 

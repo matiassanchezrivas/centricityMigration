@@ -1,15 +1,8 @@
 import React from 'react';
 import HexagonsHeader from '../components/hexagonsHeader'
 import HexagonsContainer from '../components/hexagonsContent'
+import { connect } from 'react-redux';
 
-// const styles = theme => ({
-//     marginTop: {
-//         marginTop: theme.spacing.unit * 2,
-//     },
-//     marginBottom: {
-//         marginBottom: theme.spacing.unit * 2,
-//     }
-// });
 
 class Overview extends React.Component {
     constructor(props) {
@@ -18,14 +11,33 @@ class Overview extends React.Component {
         };
     }
     componentDidMount() {
+
     }
     render() {
+        const { tags } = this.props;
         return (<div>
-            <HexagonsHeader />
+            <HexagonsHeader tags={tags} />
             <HexagonsContainer />
         </div>);
     }
 }
 
+const mapDispatchToProps = function (dispatch) {
+    return ({
+    })
+}
 
-export default Overview;
+
+const mapStateToProps = function (state) {
+    return {
+        workspaces: state.workspaces.workspaces,
+        tags: state.workspaces.tags,
+        groups: state.workspaces.groups,
+        userNames: state.workspaces.userNames,
+        machineNames: state.workspaces.machineNames,
+        budles: state.workspaces.bundles,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+
