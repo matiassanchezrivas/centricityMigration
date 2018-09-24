@@ -15,25 +15,37 @@ import {
 } from 'reactstrap';
 
 import { FaCalendar } from 'react-icons/fa';
-import Modal from './modal'
+import ModalHOC from './modal'
+import DateRangePicker from './DateRangePicker'
 
 
-var reports = ['Last User Connection', 'AVG Performance', 'Events', 'Events by workspaces', 'Used time by hours', 'Used time by days', 'Machine vs Users']
+var reports = ["Select a report", 'Last user connection', 'AVG Performance', 'Events', 'Events by workspaces', 'Used time by hours', 'Used time by days', 'Machine vs Users']
+var Styles = {
+    marginHorizontal: {
+        marginRight: "10px",
+    },
+    marginVertical: {
+        marginTop: "10px",
+    }
+}
+
+const ModalDateRangePicker = ModalHOC(DateRangePicker);
 
 export default class HexagonsHeader extends React.Component {
     constructor(props) {
         super(props);
 
-
         this.state = {
             isOpen: false,
             dropdownOpen: false,
             dateRangeModalOpen: false,
+            report: undefined
         };
 
         this.toggle = this.toggle.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     toggle() {
@@ -54,13 +66,28 @@ export default class HexagonsHeader extends React.Component {
         }));
     }
 
+    handleChange(name, value) {
+        if (name == 'report') {
+            if (value != "Select a report") {
+                this.setState({ [name]: value })
+            } else {
+                this.setState({ [name]: undefined })
+            }
+
+        }
+    }
+
+
+
+
     render() {
         const { range, handleSelectRange } = this.props;
-        const { dateRangeModalOpen } = this.state;
+        const { dateRangeModalOpen, isOpen } = this.state;
+        const margin = (!isOpen) ? null : Styles.marginVertical;
 
         return (
             <div>
-                <Modal
+                <ModalDateRangePicker
                     isOpen={dateRangeModalOpen}
                     toggle={this.toggleModal}
                     title="Select date"
@@ -72,40 +99,40 @@ export default class HexagonsHeader extends React.Component {
                     range={range}
                     handleSelectRange={handleSelectRange}
                 />
+
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                            <DropdownToggle caret>
-                                Select a Report
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                {reports.map((report, i) => <DropdownItem key={i}>{report}</DropdownItem>)}
-                            </DropdownMenu>
-                        </Dropdown>
-                        <Nav className="ml-auto" navbar>
+                        <Nav navbar>
+                            <NavItem style={{ ...margin, ...Styles.marginHorizontal }}>
+                                <Input type="select" name="orderBy" onChange={(event) => this.handleChange("orderBy", event.target.value)}>
+                                    {reports.map((report, i) =>
+                                        <option key={i}>{report}</option>
+                                    )}
+                                </Input>
+                            </NavItem>
 
-
-                            <NavItem onClick={this.toggleModal}>
+                            <NavItem onClick={this.toggleModal} style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <InputGroup>
                                     <InputGroupAddon addonType="prepend"><Button><FaCalendar /></Button></InputGroupAddon>
                                     <Input readOnly value={range.startDate.toISOString().slice(0, 10)} />
                                 </InputGroup>
                             </NavItem>
-                            <NavItem onClick={this.toggleModal}>
+                            <NavItem onClick={this.toggleModal} style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <InputGroup>
                                     <InputGroupAddon addonType="prepend"><Button><FaCalendar /></Button></InputGroupAddon>
                                     <Input readOnly value={range.endDate.toISOString().slice(0, 10)} />
                                 </InputGroup>
                             </NavItem>
-
-
-                            <NavItem>
+                            <NavItem style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <Button>View</Button>
                             </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Exports
+
+                        </Nav>
+                        <Nav navbar className="ml-auto">
+                            <UncontrolledDropdown nav inNavbar >
+                                <DropdownToggle nav caret >
+                                    Export
                     </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem>
