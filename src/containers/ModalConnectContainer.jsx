@@ -1,5 +1,8 @@
 import React from 'react';
-import Modals from '../components/Modals'
+import Form from '../components/Form';
+import ModalHOC from '../components/modal';
+
+const ModalConnect = ModalHOC(Form)
 
 class ModalConnectContainer extends React.Component {
     constructor(props){
@@ -50,7 +53,7 @@ class ModalConnectContainer extends React.Component {
     const {modal, toggle, formValues, selectedData } = this.props
     return (
       <div>
-            <Modals 
+            {/* <Modals 
                 selectedData={selectedData}
                 modal={modal} 
                 toggle={toggle} 
@@ -60,6 +63,33 @@ class ModalConnectContainer extends React.Component {
                 handleChangeCheckbox = {this.handleChangeCheckbox}
                 state={this.state}   
                              
+            /> */}
+            <ModalConnect 
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                handleChangeCheckbox = {this.handleChangeCheckbox}
+                state={this.state}
+                title={"Add Connect Instance"} 
+                isOpen={modal} 
+                toggle={this.toggleModal} 
+                formValues={formValues} 
+                addConnectInstance={this.addConnectInstance} 
+                selectedData={selectedData} 
+                editInstance={this.editInstance}
+                buttons={[{
+                            color: "primary",
+                            onClick: this.toggleModal,
+                            text: "Save",
+                            type: "submit"
+                        },
+                        {
+                            color: "secondary",
+                            onClick: this.toggleModal,
+                            text: "Cancel",
+                            type: "submit"
+                        }
+                
+                ]} 
             />
       </div>
     );

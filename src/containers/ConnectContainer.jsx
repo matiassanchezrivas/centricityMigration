@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Table from '../components/tabla';
-import ModalConnectContainer from './ModalConnectContainer';
+
 import { Button } from 'reactstrap';
 import { FiX,FiCheck, FiEdit, FiEdit3 } from 'react-icons/fi'
 import axios from 'axios';
+import Form from '../components/Form';
+import ModalHOC from '../components/modal';
 
+const ModalConnect = ModalHOC(Form)
 
 const formValues = ['alias', 'arn', 'instanceid', 'url', 'region', 'active']
 const headers =[
@@ -39,19 +42,25 @@ class ConnectContainer extends Component {
             headers: [],
             modal: false,
             selectedData: {},
-            update: false
+            changeData: {
+                active: false
+            },
+            update: false,
+
         }
-        this.openModal = this.openModal.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
         this.addConnectInstance = this.addConnectInstance.bind(this);
         this.editConnectInstance = this.editConnectInstance.bind(this);
         this.editInstance = this.editInstance.bind(this);
         this.fetchData = this.fetchData.bind(this);
-        this.renderTable = this.renderTable.bind(this);
+        this.renderRow = this.renderRow.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
     }
 
     fetchData() {
         //ver que el 3 es un :id
-        console.log('fetchdata')
         axios.get('http://dev.sandbox-us.centricity.io:8091/connect/instances/customer/3/list')
             .then(resp => resp.data)
             .then(data => {
@@ -73,22 +82,19 @@ class ConnectContainer extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('prev',prevState)
-        console.log('state', this.state)
         if(prevState.update !== this.state.update){
-            console.log('entro')
            this.fetchData();
         }
     }
 
-    openModal() {
+    toggleModal() {
         this.setState({
             modal: !this.state.modal
         })
     }
 
     editConnectInstance(id) {
-        this.openModal()
+        this.toggleModal()
         this.state.data.map(inst => {
             if(inst.id === id){
                 this.setState({
@@ -110,6 +116,7 @@ class ConnectContainer extends Component {
     }
 
     editInstance(instance){
+        console.log('INSTANCE',instance)
         axios.post('http://dev.sandbox-us.centricity.io:8091/connect/instances/updateinstance/3', instance)
         .then(function (response) {
             console.log(response);            
@@ -124,7 +131,58 @@ class ConnectContainer extends Component {
         });
     }
 
-    renderTable(data, header, k) {
+    handleSubmit(event){
+        console.log('handleSubmit')
+        this.state.selectedData.id?this.editInstance(this.state.selectedData):
+        this.addConnectInstance(this.state.changeData)
+        
+        this.setState({
+                changeData: {},
+                selectedData: {}
+            })
+            event.preventDefault();
+            this.toggleModal()
+        
+    }
+    
+    handleChange(e){
+        if(this.state.selectedData.id){
+            var partialState = {... this.state.selectedData};
+            partialState[e.target.name] = e.target.value;
+            this.setState({
+                selectedData: partialState
+            });
+            
+        }
+        else{
+            var partialState = {... this.state.changeData};
+            partialState[e.target.name] = e.target.value;
+            this.setState({
+                changeData: partialState
+            });
+        }
+    }
+
+    handleChangeCheckbox(e){
+        if(this.state.selectedData.id){
+            var partialState = {... this.state.selectedData};
+            partialState.active = !this.state.selectedData.active;
+            this.setState({
+                selectedData: partialState
+            });
+            
+        }
+        else{
+            var partialState = {... this.state.changeData};
+            partialState[e.target.name] = true;
+            this.setState({
+                changeData: partialState
+            });
+        }
+    }
+
+
+    renderRow(data, header, k) {
         if(header.key === 'alias'){
             return(
                 <td key={k}><Link to={`/#/connectdashboard/${data.id}`}>{data[header.key]}</Link></td>
@@ -156,17 +214,50 @@ class ConnectContainer extends Component {
             )
         }
     }
-
+    
     render(){
         const { data, headers, modal, selectedData } = this.state
         return(
             <div className="container">
-                {modal?<ModalConnectContainer modal={modal} toggle={this.openModal} formValues={formValues} addConnectInstance={this.addConnectInstance} selectedData={selectedData} editInstance={this.editInstance} />:null}
+                <div className="row">
+                <ModalConnect 
+                    title={"Add Connect Instance"} 
+                    isOpen={modal} 
+                    toggle={this.toggleModal} 
+                    formValues={formValues} 
+                    addConnectInstance={this.addConnectInstance} 
+                    selectedData={selectedData} 
+                    editInstance={this.editInstance}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    handleChangeCheckbox={this.handleChangeCheckbox}
+                    buttons={[{
+                            color: "primary",
+                            onClick: this.handleSubmit,
+                            text: "Save",
+                            type: "submit"
+                        },
+                        {
+                            color: "secondary",
+                            onClick: this.toggleModal,
+                            text: "Cancel",
+                            type: "submit"
+                        }
+                
+                    ]} 
+                />
+                </div>
                 <div className="row justify-content-end" style={{margin: '30px 0 30px 0'}}>
-                    <Button color="primary" onClick={()=>this.openModal()}>Add Connect instance</Button>
+                    <Button color="primary" onClick={()=>{
+                        this.setState({
+                            selectedData: {}
+                        })
+                        this.toggleModal()
+                    }
+                    }>Add Connect instance</Button>
                 </div>
                 <div className="row justify-content-md-center">
-                    <Table headers={headers} data={data} renderTable={this.renderTable} />                    
+                    <Table headers={headers} data={data} renderRow={this.renderRow} />                    
                 </div>
             </div>
         )

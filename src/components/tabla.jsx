@@ -5,13 +5,13 @@ import { Table } from 'reactstrap';
 
 export default class Tabla extends React.Component {
     render() {
-        const { headers, data, renderTable } = this.props
+        const { headers, data, renderRow } = this.props
         // headers es un array de obj en el cual trae key, type, header 
         // KEY: el key
         // TYPE: si es txt, checkbox, link...
         // HEADER: el texto a mostrar
         // data es un arreglo que tiene obj con toda la data de la db
-        // renderTable es una funcion que renderea el contenido de la table
+        // renderRow es una funcion que renderea cada row
         return (
             <Table striped>
                 <thead>
@@ -28,7 +28,7 @@ export default class Tabla extends React.Component {
                         <tr key={key}>
                         {headers.map((header, k) => {
                         return (
-                            renderTable(value, header, k)
+                            renderRow(value, header, k)
                         )
                         })} 
                         </tr>
