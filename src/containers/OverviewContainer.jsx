@@ -14,10 +14,10 @@ class Overview extends React.Component {
 
     }
     render() {
-        const { tags } = this.props;
+        const { tags, userNames, workspaces } = this.props;
         return (<div>
-            <HexagonsHeader tags={tags} />
-            <HexagonsContainer />
+            <HexagonsHeader tags={tags} userNames={userNames} />
+            <HexagonsContainer workspaces={workspaces} />
         </div>);
     }
 }

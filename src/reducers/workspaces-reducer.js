@@ -5,7 +5,8 @@ const initialState = {
     tags: [],
     bundles: [],
     groups: [],
-    machineNames: []
+    machineNames: [],
+    userNames: [],
 }
 
 export default (state = initialState, action) => {

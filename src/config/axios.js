@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL: 'http://dev.sandbox-us.centricity.io:8080/api',
     timeout: 1000,
     headers: {
-        "X-Auth-Sid": "29a31d61-63d2-46cf-852d-78d2ebed4b6a"
+        "X-Auth-Sid": "acdd6e54-df83-44ac-b402-c9726b55fa8c"
     },
     crossDomain: true
 });

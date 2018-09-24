@@ -55,9 +55,10 @@ export const fetchWorkspaces = (userId, page, size, sort) => dispatch => {
 }
 
 export const fetchTags = (id) => dispatch => {
+    debugger;
     return axios.post(`/workspace/tags/byCustomerId/${id}`)
         .then(res => res.data)
-        .then(tags => dispatch(receiveTags(tags)))
+        .then(tags => { debugger; dispatch(receiveTags(tags)) })
         .catch(e => console.log(e))
 }
 
@@ -88,6 +89,21 @@ export const fetchUserNames = (id) => dispatch => {
         .then(machineNames => dispatch(receiveUserNames(machineNames)))
         .catch(e => console.log(e))
 }
+
+// export const fetchWorkspacesByUserName = (id) => dispatch => {
+//     return axios.post(`/workspace/customer/${userId}/list2?page=${page}&size=${size}&sort=${sort}`)
+//         .then(res => res.data)
+//         .then(machineNames => dispatch(receiveUserNames(machineNames)))
+//         .catch(e => console.log(e))
+// }
+
+// $scope.filterByUsername = function () {
+//     $scope.loaded = false;
+//     $scope.settings.req.usernames = $scope.request.usernames.map(function (m) { return m.text });
+//     WorkspaceAPI.getWorkspaces2($scope.settings.req, 0, $scope.settings.pagination.itemsPerPage, 'userName').then(function (response) {
+//         $scope.processWorkspaces(response);
+//     });
+// }
 
 
 

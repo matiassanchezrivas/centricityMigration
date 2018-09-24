@@ -13,6 +13,7 @@ import {
     Button, ButtonGroup, InputGroup, InputGroupAddon, Input, Dropdown,
     FormGroup, Label
 } from 'reactstrap';
+import Typeahead from './typeahead'
 
 import { FaSearch } from 'react-icons/fa';
 
@@ -72,19 +73,19 @@ export default class HexagonsHeader extends React.Component {
 
     render() {
         const { rSelected, groupBy, isOpen } = this.state;
-        const { tags } = this.props;
+        const { tags, userNames } = this.props;
+        console.log(userNames)
         const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
             <div>
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />
-
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav style={{ ...margin, ...Styles.marginHorizontal }} navbar>
-                            <InputGroup>
-                                <Input />
+                            {<InputGroup >
+                                <Typeahead options={userNames} multiple={true} placeholder='Type the usernames' />
                                 <InputGroupAddon addonType="append"><Button><FaSearch /></Button></InputGroupAddon>
-                            </InputGroup>
+                            </InputGroup>}
                         </Nav>
 
                         <Nav style={{ ...margin, ...Styles.marginHorizontal }}>

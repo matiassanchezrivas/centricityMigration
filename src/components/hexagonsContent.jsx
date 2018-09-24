@@ -6,10 +6,10 @@ import {
     Button, Col, Row, CardBody, ButtonGroup
 } from 'reactstrap';
 
-var hexagonsPrueba = [];
-for (var i = 0; i < 10000; i++) {
-    hexagonsPrueba.push(parseInt(Math.random() * 8));
-}
+// var hexagonsPrueba = [];
+// for (var i = 0; i < 10000; i++) {
+//     hexagonsPrueba.push(parseInt(Math.random() * 8));
+// }
 
 var awsStates = ["Available", "Starting", "Pending", "Stopped", "Stopping", "Terminating", "Unhealthy", "Logged"]
 var liquidwareStates = ["A+", "A", "A-", "B+", "B-", "C", "N/A"]
@@ -48,28 +48,28 @@ var Styles = {
     margin: {
         margin: "10px",
     },
-    colorHex0: {
+    hexagonColor_AVAILABLE: {
         backgroundColor: "#69c4a6"
     },
-    colorHex1: {
+    hexagonColor_STARTING: {
         backgroundColor: "#f8e185"
     },
-    colorHex2: {
+    hexagonColor_PENDING: {
         backgroundColor: "#5288d1"
     },
-    colorHex3: {
+    hexagonColor_STOPPED: {
         backgroundColor: "#222"
     },
-    colorHex4: {
+    hexagonColor_STOPPING: {
         backgroundColor: "#789"
     },
-    colorHex5: {
+    hexagonColor_TERMINATING: {
         backgroundColor: "#F59B00"
     },
-    colorHex6: {
+    hexagonColor_UNHEALTHY: {
         backgroundColor: "#c61d6a"
     },
-    colorHex7: {
+    hexagonColor_LOGGED: {
         backgroundColor: "#32cd32"
     },
 
@@ -98,7 +98,7 @@ var Styles = {
         display: "block",
         width: "32px",
         height: "32px",
-        backgroundColor: 'red',
+        //backgroundColor: 'red',
         nthChild: "2n"
     }
 }
@@ -106,8 +106,6 @@ var Styles = {
 class hexagonsContent extends React.Component {
     constructor(props) {
         super(props);
-
-
         this.state = { rSelected: 0 }
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
 
@@ -118,14 +116,14 @@ class hexagonsContent extends React.Component {
     }
 
     render() {
-        //const { } = props
+        const { workspaces } = this.props
         return (
             <div>
                 <Card>
                     <Row style={Styles.margin}>
                         {(this.state.rSelected === 0) ? awsStates.map((state, i) => {
                             return (<div key={i} style={Styles.margin}>
-                                <div style={{ ...Styles.hexagono, ...Styles["colorHex" + i] }}></div>
+                                <div style={{ ...Styles.hexagono, ...Styles[`hexagonColor_${state.toUpperCase()}`] }}></div>
                                 <li key={i} style={Styles.li} >{state}</li>
                                 {/* /* class={`legend legend-aws-${i + 1}`} */}
                             </div>
@@ -148,12 +146,11 @@ class hexagonsContent extends React.Component {
                 </Card>
                 <Row style={Styles.margin}>
                     {
-                        hexagonsPrueba.map((hex, i) => {
+                        workspaces.map((workspace, i) => {
+                            console.log(workspace)
                             return (
                                 <div key={i} style={Styles.containerHexagono}>
-
-                                    <div style={{ ...Styles.hexagonoMuestra, ...Styles["colorHex" + hex] }}></div>
-
+                                    <div style={{ ...Styles.hexagonoMuestra, ...Styles[`hexagonColor_${workspace.state}`] }}></div>
                                 </div>
                             )
                         })
