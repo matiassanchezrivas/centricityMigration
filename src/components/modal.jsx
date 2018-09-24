@@ -2,32 +2,29 @@ import React, { Component } from 'react';
 import { Modal, ModalHeader, ModalFooter, Button } from 'reactstrap';
 import DateRangePicker from './DateRangePicker'
 
-class Tab extends Component {
+//isOpen (BOOLEAN) = whether the modal is/isnt be shown
+//title (STRING)
+//toggle (FUNCTION) 
+//className (OBJECT)
+//buttons (OBJECT) > example: {color: 'Primary', onClick: () => console.log('clic'), text: 'texto del boton'}
 
-    render() {
-        const { isOpen, toggle, className, title, buttons, range, handleSelectRange } = this.props;
-        //IsOpen boolean
-        //toggle function
-        //classname
-        console.log("buttons", buttons);
 
-        return (
-            <Modal isOpen={isOpen} toggle={toggle} className={className}>
-                <ModalHeader toggle={toggle}>{title}</ModalHeader>
-                <DateRangePicker
-                    range={range}
-                    handleSelectRange={handleSelectRange}
-                />
+
+const ModalHOC = BaseComponent => (props) => {
+    const { isOpen, toggle, className, buttons, title } = props;
+    return (
+        <Modal isOpen={isOpen} toggle={toggle} className={className}>
+            <ModalHeader toggle={toggle}>{title}</ModalHeader>
+            <BaseComponent {...props} />
+            {(buttons) ?
                 <ModalFooter>
-                    {(buttons) ?
-                        buttons.map((button, i) =>
-                            <Button key={i} color={button.color} onClick={button.onClick}>{button.text}</Button>
-                        )
-                        : null}
+                    {buttons.map((button, i) =>
+                        <Button key={i} color={button.color} onClick={button.onClick}>{button.text}</Button>
+                    )}
                 </ModalFooter>
-            </Modal>
-        )
-    }
+                : null}
+
+        </Modal>)
 }
 
-export default Tab;
+export default ModalHOC;

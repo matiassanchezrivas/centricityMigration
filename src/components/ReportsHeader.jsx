@@ -15,7 +15,8 @@ import {
 } from 'reactstrap';
 
 import { FaCalendar } from 'react-icons/fa';
-import Modal from './modal'
+import ModalHOC from './modal'
+import DateRangePicker from './DateRangePicker'
 
 
 var reports = ["Select a report", 'Last user connection', 'AVG Performance', 'Events', 'Events by workspaces', 'Used time by hours', 'Used time by days', 'Machine vs Users']
@@ -27,6 +28,10 @@ var Styles = {
         marginTop: "10px",
     }
 }
+
+
+
+const Modal = ModalHOC(DateRangePicker);
 
 export default class HexagonsHeader extends React.Component {
     constructor(props) {
@@ -76,6 +81,7 @@ export default class HexagonsHeader extends React.Component {
 
 
 
+
     render() {
         const { range, handleSelectRange } = this.props;
         const { dateRangeModalOpen, isOpen } = this.state;
@@ -95,6 +101,7 @@ export default class HexagonsHeader extends React.Component {
                     range={range}
                     handleSelectRange={handleSelectRange}
                 />
+
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
