@@ -12,7 +12,35 @@ import Tabla from '../components/tabla'
 //     }
 // });
 
-var headers = ["First name", "Metric Type", "Validation type", "Arguments", "Workspace ID"];
+// var headers = ["First name", "Metric Type", "Validation type", "Arguments", "Workspace ID"];
+
+const headers = [
+    {
+        key: 'First name',
+        type: 'text',
+        header: 'First name'
+    },
+    {
+        key: 'Metric Type',
+        type: 'text',
+        header: 'Metric Type'
+    },
+    {
+        key: 'Validation type',
+        type: 'text',
+        header: 'Validation type'
+    },
+    {
+        key: 'Arguments',
+        type: 'text',
+        header: 'Arguments'
+    },
+    {
+        key: 'Workspace ID',
+        type: 'text',
+        header: 'Workspace ID'
+    },
+]
 
 
 var dataPrueba = [];
@@ -25,8 +53,16 @@ class Monitor extends React.Component {
         super(props);
         this.state = {
         };
+        this.renderTable = this.renderTable.bind(this);
     }
     componentDidMount() {
+    }
+
+    renderTable(data, header, k) {
+        return(
+            <td key={k}>{data[k]}</td>
+        )
+    
     }
 
     render() {
@@ -34,6 +70,7 @@ class Monitor extends React.Component {
             <Tabla
                 headers={headers}
                 data={dataPrueba}
+                renderTable={this.renderTable}
             />
         </div>);
     }
