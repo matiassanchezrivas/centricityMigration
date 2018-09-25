@@ -77,9 +77,6 @@ export default class HexagonsHeader extends React.Component {
         }
     }
 
-
-
-
     render() {
         const { range, handleSelectRange } = this.props;
         const { dateRangeModalOpen, isOpen } = this.state;

@@ -47,18 +47,17 @@ const receiveUserNames = (userNames) => ({
     userNames
 })
 
-export const fetchWorkspaces = (userId, page, size, sort) => dispatch => {
-    return axios.post(`/workspace/customer/${userId}/list2?page=${page}&size=${size}&sort=${sort}`)
+export const fetchWorkspaces = (userId, page, size, sort, filter) => dispatch => {
+    return axios.post(`/workspace/customer/${userId}/list2?page=${page}&size=${size}&sort=${sort}`, filter)
         .then(res => res.data)
         .then(workspaces => dispatch(receiveWorkspaces(workspaces.content)))
         .catch(e => console.log(e))
 }
 
 export const fetchTags = (id) => dispatch => {
-    debugger;
     return axios.post(`/workspace/tags/byCustomerId/${id}`)
         .then(res => res.data)
-        .then(tags => { debugger; dispatch(receiveTags(tags)) })
+        .then(tags => { dispatch(receiveTags(tags)) })
         .catch(e => console.log(e))
 }
 

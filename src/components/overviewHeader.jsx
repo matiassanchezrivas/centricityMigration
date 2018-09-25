@@ -41,12 +41,14 @@ export default class HexagonsHeader extends React.Component {
             dropdownOpen: false,
             rSelected: 0,
             groupBy: undefined,
+            selectedUserNames: [],
         };
 
         this.toggle = this.toggle.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeUserNames = this.handleChangeUserNames.bind(this);
     }
 
     onRadioBtnClick(rSelected) {
@@ -70,10 +72,25 @@ export default class HexagonsHeader extends React.Component {
         }
     }
 
+    updateUsernames(usernames) {
+        const { fetchWorkspaces, searchFilter } = this.props;
+        console.log('ENTRAA')
+
+        this.props.updateUserNames(usernames)
+        console.log('SEARCHFILTER', searchFilter)
+        fetchWorkspaces(3, 0, 126, 'id', searchFilter)
+
+
+    }
+
+    handleChangeUserNames(userNames) {
+        this.setState({ selectedUserNames: userNames })
+    }
+
 
     render() {
-        const { rSelected, groupBy, isOpen } = this.state;
-        const { tags, userNames } = this.props;
+        const { rSelected, groupBy, isOpen, selectedUserNames } = this.state;
+        const { tags, userNames, updateUserNames } = this.props;
         console.log(userNames)
         const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
@@ -83,8 +100,8 @@ export default class HexagonsHeader extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav style={{ ...margin, ...Styles.marginHorizontal }} navbar>
                             {<InputGroup >
-                                <Typeahead options={userNames} multiple={true} placeholder='Type the usernames' />
-                                <InputGroupAddon addonType="append"><Button><FaSearch /></Button></InputGroupAddon>
+                                <Typeahead onChange={this.handleChangeUserNames} options={userNames} multiple={true} placeholder='Type the usernames' />
+                                <InputGroupAddon addonType="append"><Button onClick={() => this.updateUsernames(selectedUserNames)}><FaSearch /></Button></InputGroupAddon>
                             </InputGroup>}
                         </Nav>
 
@@ -95,7 +112,6 @@ export default class HexagonsHeader extends React.Component {
                                 )}
                             </Input>
                         </Nav>
-
                         {
                             (groupBy != undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <Input type="select" name="select" id="exampleSelect">

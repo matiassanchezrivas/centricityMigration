@@ -103,7 +103,7 @@ var Styles = {
     }
 }
 
-class hexagonsContent extends React.Component {
+class overviewContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = { rSelected: 0 }
@@ -162,5 +162,5 @@ class hexagonsContent extends React.Component {
 }
 
 
-export default hexagonsContent;
+export default overviewContent;
 

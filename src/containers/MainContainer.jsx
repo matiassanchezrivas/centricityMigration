@@ -42,7 +42,7 @@ class MainContainer extends React.Component {
 
 const mapDispatchToProps = function (dispatch) {
     return ({
-        fetchWorkspaces: (userId, page, size, sort) => dispatch(fetchWorkspaces(userId, page, size, sort)),
+        fetchWorkspaces: (userId, page, size, sort, filter) => dispatch(fetchWorkspaces(userId, page, size, sort, filter)),
         fetchTags: (id) => dispatch(fetchTags(id)),
         fetchGroups: (id) => dispatch(fetchGroups(id)),
         fetchUserNames: (id) => dispatch(fetchUserNames(id)),
@@ -54,6 +54,7 @@ const mapDispatchToProps = function (dispatch) {
 
 const mapStateToProps = function (state) {
     return {
+
     };
 }
 
