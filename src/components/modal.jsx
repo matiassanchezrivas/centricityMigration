@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalFooter, Button } from 'reactstrap';
 
+
 //isOpen (BOOLEAN) = whether the modal is/isnt shown
 //title (STRING)
 //toggle (FUNCTION) 

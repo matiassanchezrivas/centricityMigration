@@ -1,9 +1,10 @@
 import React from 'react';
 import {
     Form, FormGroup, Label, Input,
-    Container, Row, Col,
+    Container, Row, Col, Button
 } from 'reactstrap';
 import Typeahead from './typeahead'
+import { FaTrash } from 'react-icons/fa';
 
 const liquidware = [
     { value: 'up_time_percent', text: "Uptime(%)" },
@@ -24,8 +25,11 @@ const statuses = ["Available", "Starting", "Pending", "Stopped", "Stopping", "Te
 
 
 export default class Example extends React.Component {
+
+
+
     render() {
-        const { tags = [], bundles = [], machineNames = [], userNames = [], IPs = [], selectedOnFilter, onChange } = this.props;
+        const { tags, removeTag, addTag, changeTag, allTags = [], bundles = [], machineNames = [], userNames = [], IPs = [], selectedOnFilter, onChange } = this.props;
         return (
             <Container>
                 <Form>
@@ -36,7 +40,7 @@ export default class Example extends React.Component {
 
                     <FormGroup>
                         <Label>Health</Label>
-                        <Input onChange={(e) => {
+                        <Input value={selectedOnFilter.unhealthy} onChange={(e) => {
                             onChange("unhealthy", e.target.value)
                         }} type="select" name="select" id="exampleSelect">
                             <option value={'none'}>All</option>
@@ -88,20 +92,34 @@ export default class Example extends React.Component {
 
                     <FormGroup>
                         <Label>Tags</Label>
-                        <Row>
-                            <Col xs="6">
-                                <Input onChange={(event) => onChange("liquidwareMetric", event.target.value)} type="select">
-                                    {
-                                        tags.map((t, i) => {
-                                            return <option key={i}>{t}</option>
-                                        })
-                                    }
-                                </Input>
-                            </Col>
-                            <Col xs="6">
-                                <Input onChange={(event) => onChange("liquidwareValue", event.target.value)} value={selectedOnFilter.liquidwareValue} placeholder="Value" />
+                        {
+                            tags.map((tag, i) => (
+                                <Row key={i} className="mb-2">
+                                    <Col xs="5">
+                                        <Input value={tags[i].key} onChange={(event) => changeTag("key", event.target.value, i)} type="select">
+                                            {
+                                                allTags.map((t, i) => {
+                                                    return <option key={i}>{t}</option>
+                                                })
+                                            }
+                                        </Input>
+                                    </Col>
+                                    <Col xs="5">
+                                        <Input value={tags[i].value} onChange={(event) => changeTag("value", event.target.value, i)} placeholder="Value" />
+                                    </Col>
+                                    <Col xs="2">
+                                        <Button onClick={() => removeTag(i)}><FaTrash /></Button>
+                                    </Col>
+                                </Row>
+                            ))
+                        }
+                        <Row className="mt-2">
+                            <Col xs="12">
+                                <Button onClick={(e) => addTag(e.target.value)} color="secondary" size="lg" block>+</Button>
                             </Col>
                         </Row>
+
+
                     </FormGroup>
 
                     <FormGroup>
@@ -114,7 +132,7 @@ export default class Example extends React.Component {
                     </FormGroup>
                     <FormGroup>
                         <Label >IP Addresses</Label>
-                        <Typeahead onChange={this.handleChangeUserNames} options={IPs} multiple={true} placeholder="Type the IPs" />
+                        <Typeahead onChange={this.handleChangeUserNames} options={[]} allowNew={true} newSelectionPrefix="Add new IP... " multiple={true} placeholder="Type the IPs" />
                     </FormGroup>
                     <FormGroup onChange={(e) => onChange("userConnected", e.target.value)} tag="fieldset">
                         <FormGroup check>

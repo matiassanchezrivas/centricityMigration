@@ -1,4 +1,4 @@
-import { UPDATE_SEARCH_GROUP, UPDATE_USER_NAMES } from '../constants';
+import { UPDATE_SEARCH_GROUP, UPDATE_USER_NAMES, UPDATE_FILTER } from '../constants';
 
 const receiveSearchGroup = (group) => ({
     type: UPDATE_SEARCH_GROUP,
@@ -10,6 +10,15 @@ const receiveUserNames = (userNames) => ({
     userNames
 })
 
+const receiveFilter = (filter) => ({
+    type: UPDATE_FILTER,
+    filter
+})
+
+export const updateFilter = (filter) => dispatch => {
+    dispatch(receiveFilter(filter))
+}
+
 export const updateSearchGroup = (group) => dispatch => {
     return dispatch(receiveSearchGroup(group))
 }
@@ -17,3 +26,4 @@ export const updateSearchGroup = (group) => dispatch => {
 export const updateUserNames = (userNames) => dispatch => {
     dispatch(receiveUserNames(userNames))
 }
+

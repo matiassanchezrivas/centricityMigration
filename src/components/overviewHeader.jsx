@@ -57,7 +57,8 @@ export default class HexagonsHeader extends React.Component {
             groupBy: undefined,
             selectedUserNames: [],
             modalFormOpen: true,
-            selectedOnFilter: selectedInit
+            selectedOnFilter: selectedInit,
+            tags: [{ key: "", value: "" }]
         };
 
         this.toggle = this.toggle.bind(this);
@@ -67,6 +68,35 @@ export default class HexagonsHeader extends React.Component {
         this.handleChangeFilter = this.handleChangeFilter.bind(this);
         this.toggleModal = this.toggleModal.bind(this)
         this.resetFilter = this.resetFilter.bind(this);
+        this.addTag = this.addTag.bind(this);
+        this.removeTag = this.removeTag.bind(this);
+        this.changeTag = this.changeTag.bind(this);
+        this.updateFilter = this.updateFilter.bind(this);
+    };
+    addTag() {
+        this.setState(prevState => ({
+            tags: [...prevState.tags, { key: '', value: '' }]
+        }))
+    }
+
+    removeTag(index) {
+        this.setState({
+            tags: this.state.tags.filter((_, i) => i !== index)
+        });
+    }
+
+    changeTag(type, value, index) {
+        console.log("CHANGETAG", type, value, index)
+        this.setState(prevState => {
+            const newTags = [...prevState.tags];
+
+            if (type === 'key') newTags[index].key = value;
+            if (type === 'value') newTags[index].value = value;
+            console.log(newTags)
+            return ({
+                tags: newTags
+            })
+        })
     }
 
     onRadioBtnClick(rSelected) {
@@ -94,6 +124,45 @@ export default class HexagonsHeader extends React.Component {
         this.props.updateUserNames(usernames)
     }
 
+    updateFilter() {
+        const { userNames, userConnected, unhealthy, status, liquidwareValue, machineNames, liquidwareMetric, liquidwareOperator } = this.state.selectedOnFilter;
+        console.log('SELECTED ON FILTER', this.state.selectedOnFilter)
+        // liquidwareMetric: "up_time_percent"
+        // liquidwareOperator: "equals"
+        // liquidwareValue: ""
+        // machineNames: []
+        // status: []
+        // tags: []
+        // unhealthy: undefined
+        // userConnected: "all"
+        // userNames: []
+        const filter = {}
+
+        if (liquidwareValue !== '') {
+            filter[liquidwareMetric] = liquidwareMetric;
+            filter[liquidwareOperator] = liquidwareOperator;
+            filter[liquidwareValue] = liquidwareValue;
+        }
+        filter.machineName = machineNames;
+
+        var newStatus = [];
+        status.forEach((st) => {
+            newStatus.push(st.toUpperCase())
+        })
+        filter.status = newStatus;
+
+        if (unhealthy == undefined) {
+            filter.unhealthy = unhealthy;
+        } else {
+            filter.unhealthy = (unhealthy === 'true') ? true : false;
+        }
+        if (userConnected !== 'all') filter.userConnected = (userConnected === 'true') ? true : false;
+        if (userNames.length > 0) filter.usernames = userNames;
+
+        this.props.updateFilter(filter);
+        console.log('UPDATE FILTER LOCAL', filter)
+    }
+
     handleChangeFilter(tag, value) {
         console.log(tag, value)
         this.setState({ selectedOnFilter: Object.assign({}, this.state.selectedOnFilter, { [tag]: value }) }, () => {
@@ -104,7 +173,21 @@ export default class HexagonsHeader extends React.Component {
     componentWillReceiveProps(nextProps) {
         const { fetchWorkspaces } = this.props;
         if (this.props.searchFilter !== nextProps.searchFilter) {
-            fetchWorkspaces(3, 0, 126, 'id', nextProps.searchFilter);
+            console.log('nextProps', nextProps.searchFilter)
+            const sf = {};
+
+            const keys = Object.keys(nextProps.searchFilter)
+            console.log('keys object', keys)
+            keys.forEach((key) => {
+                console.log('key', key, nextProps.searchFilter[key])
+                const value = nextProps.searchFilter[key];
+                if (value !== null && value !== undefined && !(Array.isArray(value) && value.length <= 0) && value !== '') {
+                    sf[key] = value;
+
+                }
+            })
+            console.log('SF', sf)
+            fetchWorkspaces(3, 0, 126, 'id', sf);
         }
     }
 
@@ -115,7 +198,10 @@ export default class HexagonsHeader extends React.Component {
     }
 
     resetFilter() {
-        this.setState({ selectedOnFilter: selectedInit })
+        this.setState({
+            selectedOnFilter: selectedInit,
+            tags: [{ key: "", value: "" }]
+        })
     }
 
 
@@ -131,7 +217,7 @@ export default class HexagonsHeader extends React.Component {
                     title="Filters"
                     buttons={[{
                         color: "primary",
-                        onClick: this.toggleModal,
+                        onClick: this.updateFilter,
                         text: "Apply"
                     }, {
                         color: "info",
@@ -147,7 +233,11 @@ export default class HexagonsHeader extends React.Component {
                     selectedOnFilter={selectedOnFilter}
                     onChange={this.handleChangeFilter}
                     bundles={bundles}
-                    tags={tags}
+                    tags={this.state.tags}
+                    allTags={tags}
+                    addTag={this.addTag}
+                    removeTag={this.removeTag}
+                    changeTag={this.changeTag}
                 />
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />

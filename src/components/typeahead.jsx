@@ -13,7 +13,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 class typehead extends React.Component {
 
     render() {
-        const { options, onChange, multiple, placeholder, selected = [] } = this.props;
+        const { options, onChange, multiple, placeholder, selected = [], allowNew = false, newSelectionPrefix = "Add a new item: " } = this.props;
         return (
             //<div style={Styles.typehead}>
             <Typeahead
@@ -23,6 +23,8 @@ class typehead extends React.Component {
                 options={options}
                 selected={selected}
                 caseSensitive
+                allowNew={allowNew}
+                newSelectionPrefix={newSelectionPrefix}
             />
             //</div>
         );
