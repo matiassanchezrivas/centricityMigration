@@ -10,12 +10,13 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Button, ButtonGroup, InputGroup, InputGroupAddon, Input, Dropdown,
-    FormGroup, Label
+    Button, ButtonGroup, InputGroup, InputGroupAddon, Input,
 } from 'reactstrap';
 import Typeahead from './typeahead'
 
 import { FaSearch } from 'react-icons/fa';
+import Form from './forms'
+import ModalHOC from './modal'
 
 const groupby = ['', 'tags', 'region', 'directory', 'account']
 const views = ['Status', 'List', 'Grid']
@@ -31,6 +32,13 @@ var Styles = {
     }
 }
 
+const ModalForm = ModalHOC(Form);
+
+const selectedInit = {
+    userNames: [],
+    machineNames: [],
+    statuses: [],
+}
 
 export default class HexagonsHeader extends React.Component {
     constructor(props) {
@@ -42,13 +50,17 @@ export default class HexagonsHeader extends React.Component {
             rSelected: 0,
             groupBy: undefined,
             selectedUserNames: [],
+            modalFormOpen: true,
+            selectedOnFilter: selectedInit
         };
 
         this.toggle = this.toggle.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeUserNames = this.handleChangeUserNames.bind(this);
+        this.handleChangeFilter = this.handleChangeFilter.bind(this);
+        this.toggleModal = this.toggleModal.bind(this)
+        this.resetFilter = this.resetFilter.bind(this);
     }
 
     onRadioBtnClick(rSelected) {
@@ -67,41 +79,76 @@ export default class HexagonsHeader extends React.Component {
     }
 
     handleChange(name, value) {
-        if (name == 'groupBy') {
+        if (name === 'groupBy') {
             this.setState({ [name]: value.split("Group by ")[1] }, () => { console.log(this.state) })
         }
     }
 
     updateUsernames(usernames) {
-        const { fetchWorkspaces, searchFilter } = this.props;
-        console.log('ENTRAA')
-
         this.props.updateUserNames(usernames)
-        console.log('SEARCHFILTER', searchFilter)
-        fetchWorkspaces(3, 0, 126, 'id', searchFilter)
-
-
     }
 
-    handleChangeUserNames(userNames) {
-        this.setState({ selectedUserNames: userNames })
+    handleChangeFilter(tag, value) {
+        console.log(tag, value)
+        this.setState({ selectedOnFilter: Object.assign({}, this.state.selectedOnFilter, { [tag]: value }) }, () => {
+            console.log(this.state)
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { fetchWorkspaces } = this.props;
+        if (this.props.searchFilter !== nextProps.searchFilter) {
+            fetchWorkspaces(3, 0, 126, 'id', nextProps.searchFilter);
+        }
+    }
+
+    toggleModal() {
+        this.setState({
+            modalFormOpen: !this.state.modalFormOpen
+        });
+    }
+
+    resetFilter() {
+        this.setState({ selectedOnFilter: selectedInit })
     }
 
 
     render() {
-        const { rSelected, groupBy, isOpen, selectedUserNames } = this.state;
-        const { tags, userNames, updateUserNames } = this.props;
-        console.log(userNames)
+        const { rSelected, groupBy, isOpen, selectedOnFilter, modalFormOpen } = this.state;
+        const { tags, userNames, machineNames } = this.props;
         const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
             <div>
+                <ModalForm
+                    isOpen={modalFormOpen}
+                    toggle={this.toggleModal}
+                    title="Filters"
+                    buttons={[{
+                        color: "primary",
+                        onClick: this.toggleModal,
+                        text: "Apply"
+                    }, {
+                        color: "info",
+                        onClick: this.resetFilter,
+                        text: "Reset"
+                    }, {
+                        color: "secondary",
+                        onClick: this.toggleModal,
+                        text: "Cancel"
+                    }]}
+                    machineNames={machineNames}
+                    userNames={userNames}
+                    selectedUserNames={selectedOnFilter.userNames}
+                    selectedMachineNames={selectedOnFilter.machineNames}
+                    onChange={this.handleChangeFilter}
+                />
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav style={{ ...margin, ...Styles.marginHorizontal }} navbar>
                             {<InputGroup >
-                                <Typeahead onChange={this.handleChangeUserNames} options={userNames} multiple={true} placeholder='Type the usernames' />
-                                <InputGroupAddon addonType="append"><Button onClick={() => this.updateUsernames(selectedUserNames)}><FaSearch /></Button></InputGroupAddon>
+                                <Typeahead selected={selectedOnFilter.userNames} onChange={(value) => this.handleChangeFilter("userNames", value)} options={userNames} multiple={true} placeholder='Type the usernames' />
+                                <InputGroupAddon addonType="append"><Button onClick={() => this.updateUsernames(selectedOnFilter.userNames)}><FaSearch /></Button></InputGroupAddon>
                             </InputGroup>}
                         </Nav>
 
@@ -113,10 +160,10 @@ export default class HexagonsHeader extends React.Component {
                             </Input>
                         </Nav>
                         {
-                            (groupBy != undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
+                            (groupBy !== undefined) ? (<Nav style={{ ...margin, ...Styles.marginHorizontal }}>
                                 <Input type="select" name="select" id="exampleSelect">
                                     {
-                                        groupBy == 'tags' ?
+                                        groupBy === 'tags' ?
                                             tags.map((tag, i) =>
                                                 < option key={i} >{tag}</option>
                                             ) :
@@ -149,7 +196,7 @@ export default class HexagonsHeader extends React.Component {
                       </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
-                            <NavItem>
+                            <NavItem onClick={this.toggleModal}>
                                 <NavLink href="#">Filters</NavLink>
                             </NavItem>
                             <NavItem>

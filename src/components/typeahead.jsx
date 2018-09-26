@@ -3,17 +3,17 @@ import React from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const Styles = {
-    typehead: {
-        minWidth: '200px',
-        maxWidth: '300px',
-    }
-}
+// const Styles = {
+//     typehead: {
+//         minWidth: '200px',
+//         maxWidth: '300px',
+//     }
+// }
 
 class typehead extends React.Component {
 
     render() {
-        const { options, onChange, multiple, labelKey, placeholder } = this.props;
+        const { options, onChange, multiple, placeholder, selected = [] } = this.props;
         return (
             //<div style={Styles.typehead}>
             <Typeahead
@@ -21,6 +21,7 @@ class typehead extends React.Component {
                 multiple={multiple}
                 onChange={onChange}
                 options={options}
+                selected={selected}
                 caseSensitive
             />
             //</div>

@@ -1,21 +1,21 @@
 import axios from '../config/axios';
 import { RECEIVE_WORKSPACES, RECEIVE_GROUPS, RECEIVE_BUNDLES, RECEIVE_TAGS, RECEIVE_MACHINE_NAMES, RECEIVE_USER_NAMES } from '../constants';
 
-const tabDefaults = {
-    defaultView: "STATUS",
-    GRID: {
-        itemsPerPage: 100,
-        //iconSize: 'N/A',
-    },
-    LIST: {
-        //iconSize : 200, 
-        itemsPerPage: 51,
-    },
-    STATUS: {
-        //iconSize : 60, 
-        itemsPerPage: 63 * 2,
-    },
-}
+// const tabDefaults = {
+//     defaultView: "STATUS",
+//     GRID: {
+//         itemsPerPage: 100,
+//         //iconSize: 'N/A',
+//     },
+//     LIST: {
+//         //iconSize : 200, 
+//         itemsPerPage: 51,
+//     },
+//     STATUS: {
+//         //iconSize : 60, 
+//         itemsPerPage: 63 * 2,
+//     },
+// }
 
 const receiveWorkspaces = (workspaces) => ({
     type: RECEIVE_WORKSPACES,

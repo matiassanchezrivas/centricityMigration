@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Modal, ModalHeader, ModalFooter, Button } from 'reactstrap';
-import DateRangePicker from './DateRangePicker'
 
 //isOpen (BOOLEAN) = whether the modal is/isnt shown
 //title (STRING)

@@ -15,7 +15,7 @@ class Overview extends React.Component {
 
     }
     render() {
-        const { tags, userNames, workspaces, sear, searchFilter, updateUserNames, fetchWorkspaces } = this.props;
+        const { tags, machineNames, groups, userNames, workspaces, searchFilter, updateUserNames, fetchWorkspaces } = this.props;
         return (<div>
             <OverviewHeader
                 tags={tags}
@@ -23,6 +23,8 @@ class Overview extends React.Component {
                 updateUserNames={updateUserNames}
                 fetchWorkspaces={fetchWorkspaces}
                 searchFilter={searchFilter}
+                machineNames={machineNames}
+                groups={groups}
             />
             <OverviewContent workspaces={workspaces} searchFilter={searchFilter} />
         </div>);
@@ -44,7 +46,7 @@ const mapStateToProps = function (state) {
         groups: state.workspaces.groups,
         userNames: state.workspaces.userNames,
         machineNames: state.workspaces.machineNames,
-        budles: state.workspaces.bundles,
+        bundles: state.workspaces.bundles,
         searchFilter: state.searchFilter,
     };
 }

@@ -10,7 +10,6 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Dropdown,
     Input, InputGroup, InputGroupAddon, Button
 } from 'reactstrap';
 
@@ -67,8 +66,8 @@ export default class HexagonsHeader extends React.Component {
     }
 
     handleChange(name, value) {
-        if (name == 'report') {
-            if (value != "Select a report") {
+        if (name === 'report') {
+            if (value !== "Select a report") {
                 this.setState({ [name]: value })
             } else {
                 this.setState({ [name]: undefined })

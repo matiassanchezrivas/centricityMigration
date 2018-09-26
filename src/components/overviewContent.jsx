@@ -3,7 +3,7 @@ import './hexagonsContent.css'
 
 import {
     Card,
-    Button, Col, Row, CardBody, ButtonGroup
+    Button, Row, ButtonGroup
 } from 'reactstrap';
 
 // var hexagonsPrueba = [];
@@ -147,7 +147,6 @@ class overviewContent extends React.Component {
                 <Row style={Styles.margin}>
                     {
                         workspaces.map((workspace, i) => {
-                            console.log(workspace)
                             return (
                                 <div key={i} style={Styles.containerHexagono}>
                                     <div style={{ ...Styles.hexagonoMuestra, ...Styles[`hexagonColor_${workspace.state}`] }}></div>

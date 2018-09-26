@@ -1,4 +1,3 @@
-import axios from '../config/axios';
 import { UPDATE_SEARCH_GROUP, UPDATE_USER_NAMES } from '../constants';
 
 const receiveSearchGroup = (group) => ({
@@ -15,6 +14,7 @@ export const updateSearchGroup = (group) => dispatch => {
     return dispatch(receiveSearchGroup(group))
 }
 
-export const updateUserNames = (userNames) => {
-    return receiveUserNames(userNames)
+export const updateUserNames = (userNames) => dispatch => {
+    dispatch(receiveUserNames(userNames))
+
 }
