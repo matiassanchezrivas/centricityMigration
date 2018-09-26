@@ -37,7 +37,13 @@ const ModalForm = ModalHOC(Form);
 const selectedInit = {
     userNames: [],
     machineNames: [],
-    statuses: [],
+    status: [], //"AVAILABLE"
+    tags: [], //"Name:6"
+    unhealthy: undefined,
+    liquidwareMetric: "up_time_percent",
+    liquidwareOperator: "equals",
+    liquidwareValue: "",
+    userConnected: 'all'
 }
 
 export default class HexagonsHeader extends React.Component {
@@ -115,7 +121,7 @@ export default class HexagonsHeader extends React.Component {
 
     render() {
         const { rSelected, groupBy, isOpen, selectedOnFilter, modalFormOpen } = this.state;
-        const { tags, userNames, machineNames } = this.props;
+        const { tags, userNames, machineNames, bundles } = this.props;
         const margin = (!isOpen) ? null : Styles.marginVertical;
         return (
             <div>
@@ -138,9 +144,10 @@ export default class HexagonsHeader extends React.Component {
                     }]}
                     machineNames={machineNames}
                     userNames={userNames}
-                    selectedUserNames={selectedOnFilter.userNames}
-                    selectedMachineNames={selectedOnFilter.machineNames}
+                    selectedOnFilter={selectedOnFilter}
                     onChange={this.handleChangeFilter}
+                    bundles={bundles}
+                    tags={tags}
                 />
                 <Navbar color="light" light expand="md">
                     <NavbarToggler onClick={this.toggle} />

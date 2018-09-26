@@ -29,30 +29,30 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Container>
-          <Row> <Col sm='12'><h2>Workspaces </h2></Col></Row>
-          <Row>
-            <Col sm='12'>
-              <Tabs
-                tabItems={menuItems}
-                toggle={this.toggle}
-                activeTab={this.state.activeTab}
-              />
-              <TabContent activeTab={this.state.activeTab}>
-                <TabPane tabId={0}>
-                  <OverviewContainer />
-                </TabPane>
-                <TabPane tabId={1}>
-                  <MonitorContainer />
-                </TabPane>
-                <TabPane tabId={2}>
-                  <ReportsContainer />
-                </TabPane>
-              </TabContent>
-            </Col>
-          </Row>
+        {/* <Container> */}
+        <Row> <Col sm='12'><h2>Workspaces</h2></Col></Row>
+        <Row>
+          <Col sm='12'>
+            <Tabs
+              tabItems={menuItems}
+              toggle={this.toggle}
+              activeTab={this.state.activeTab}
+            />
+            <TabContent activeTab={this.state.activeTab}>
+              <TabPane tabId={0}>
+                <OverviewContainer />
+              </TabPane>
+              <TabPane tabId={1}>
+                <MonitorContainer />
+              </TabPane>
+              <TabPane tabId={2}>
+                <ReportsContainer />
+              </TabPane>
+            </TabContent>
+          </Col>
+        </Row>
 
-        </Container>
+        {/* </Container> */}
       </div>
     )
 

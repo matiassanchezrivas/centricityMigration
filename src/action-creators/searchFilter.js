@@ -16,5 +16,4 @@ export const updateSearchGroup = (group) => dispatch => {
 
 export const updateUserNames = (userNames) => dispatch => {
     dispatch(receiveUserNames(userNames))
-
 }

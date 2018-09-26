@@ -15,7 +15,7 @@ class Overview extends React.Component {
 
     }
     render() {
-        const { tags, machineNames, groups, userNames, workspaces, searchFilter, updateUserNames, fetchWorkspaces } = this.props;
+        const { bundles, tags, machineNames, groups, userNames, workspaces, searchFilter, updateUserNames, fetchWorkspaces } = this.props;
         return (<div>
             <OverviewHeader
                 tags={tags}
@@ -25,6 +25,7 @@ class Overview extends React.Component {
                 searchFilter={searchFilter}
                 machineNames={machineNames}
                 groups={groups}
+                bundles={bundles}
             />
             <OverviewContent workspaces={workspaces} searchFilter={searchFilter} />
         </div>);
