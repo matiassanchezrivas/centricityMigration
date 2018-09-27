@@ -139,9 +139,9 @@ export default class HexagonsHeader extends React.Component {
         const filter = {}
 
         if (liquidwareValue !== '') {
-            filter[liquidwareMetric] = liquidwareMetric;
-            filter[liquidwareOperator] = liquidwareOperator;
-            filter[liquidwareValue] = liquidwareValue;
+            filter.liquidwareMetric = liquidwareMetric;
+            filter.liquidwareOperator = liquidwareOperator;
+            filter.liquidwareValue = liquidwareValue;
         }
         filter.machineName = machineNames;
 
